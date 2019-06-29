@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>CollectionBuilder Crawl</title>
+        <meta http-equiv="Content-Language" content="en-us" >
+        <!-- 
+            based on https://dev.to/christopherkade/developing-the-star-wars-opening-crawl-in-htmlcss-2j9e
+            and
+            https://github.com/alxwrd/opening-crawl
+        -->
+
+    <style>
+        @font-face{ 
+            font-family: 'DistantGalaxy';
+            src: url("fonts/DISTGRG_-webfont.woff") format("woff");
+        }
+        body {
+            margin: 0;
+            background-color: black;
+            font-family: sans-serif;
+        }
+        .star {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            background-color: white;
+        }
+        #start {
+            margin-top: 15%;
+            text-align: center;
+        }
+        #go {
+            font-size: 50px;
+        }
+        #crawl-container {
+            overflow: hidden;
+            display: none;
+            width: 100%;
+            margin: auto;
+            text-align: center;
+        }
+
+                .intro {
+            position: absolute;
+            top: 30%;
+            z-index: 1;
+            animation: intro 6s ease-out 1s;
+            color: rgb(75, 213, 238);
+            font-weight: 400;
+            font-size: 300%;
+            opacity: 0;
+            width: 100%;
+        }
+        @keyframes intro {
+            0% {
+            opacity: 0;
+            }
+            20% {
+            opacity: 1;
+            }
+            90% {
+            opacity: 1;
+            }
+            100% {
+            opacity: 0;
+            }
+        }
+        /* Set the animation & hide the logo */
+        .logo {    
+            z-index: 1;
+            animation: logo 9s ease-out 9s;
+            opacity: 0;
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            padding: auto;
+            font: bold 50px 'DistantGalaxy';
+            display: block;
+            color: #FFE81F !important;
+        }
+        /* Scale the logo down and maintain it centered */
+        @keyframes logo {
+            0% {
+                transform: scale(2.75);
+                opacity: 1;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0.1);
+            }
+        }
+
+        p {
+            color: #FFFF82;
+            width: 100%;
+        }
+
+        /* Set the font, lean the board, position it */
+        #board {
+            font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
+            transform: perspective(300px) rotateX(25deg);
+            transform-origin: 50% 100%;
+            text-align: justify;
+            position: absolute;
+            margin-left: -9em;
+            font-weight: bold;
+            overflow: hidden;
+            font-size: 350%;
+            height: 50em;
+            width: 18em;
+            bottom: 0;
+            left: 50%;
+        }
+
+        #board:after {    
+            position: absolute;
+            content: ' ';
+            bottom: 60%;
+            left: 0;
+            right: 0;
+            top: 0;
+        }
+
+        /* Set the scrolling animation and position it */
+        #content {
+            animation: scroll 100s linear 16s;
+            position: absolute;
+            top: 100%;
+            width: 100%;
+        }
+
+        #title, #subtitle {
+            text-align: center;
+        }
+
+        @keyframes scroll {
+            0% {
+                top: 100%;
+            }
+            100% {
+                top: -170%;
+            }
+        }
+
+    </style>
+  </head>
+  <body>
+    <div id="start">
+        <input id="go" type="button" value="Play">
+    </div>
+
+    <div id="crawl-container">
+        <section id="intro" class="intro">
+            Not long ago, in Moscow, Idaho....
+        </section>
+        
+        <section id="logo" class="logo">Collection Builder</section>
+        
+        <div id="board">
+            <div id="content">
+                <p id="title">Episode I</p>
+                <p id="subtitle">A New Grant</p>
+                <p id="crawl">CollectionBuilder is a lightweight, flexible tool for creating digital collection and exhibit websites driven by metadata, and powered by modern static web technology.</p>
+                <p>The user provides a well structured metadata spreadsheet and a directory of digital files, that CollectionBuilder will process to generate a variety of visualizations, surfacing the unique facets and features of the content, creating interactive pathways to browse and discover items while providing overall context. Each visualization is configurable using a few basic variables or config files.</p>
+                <p>At it's heart, CollectionBuilder is a set of Jekyll projects or templates designed following the Lib-STATIC development methodology which aims to lower the barriers for development and deployment of digital collections, while upholding the unique values and perspectives of GLAM institutions.</p>
+                <p>CollectionBuilder prioritizes pragmatic, sustainable, and simplified approaches to infrastructure to ensure the tool is “do-able” and approachable for digital knowledge workers in libraries and museums, empowering them to take control of their web systems.</p>
+                <p>An experiment in "minimal computing", CollectionBuilder provides a depth of learning opportunities and development possibilities, allowing users to take complete ownership over the project and make their work open to the world.</p>
+                <p>And now it is grant funded...</p>
+            </div>
+        </div>
+    </div>
+     
+    <script>
+        // Gets random x, y values based on the size of the container
+        function getRandomPosition() {  
+            var y = window.innerWidth;
+            var x = window.innerHeight;
+            var randomX = Math.floor(Math.random()*x);
+            var randomY = Math.floor(Math.random()*y);
+            return [randomX,randomY];
+        }
+        function addStars() {
+            // Sets the number of stars we wish to display
+            const numStars = 110;
+            // For every star we want to display
+            for (let i = 0; i < numStars; i++) {
+                let star = document.createElement("div");  
+                star.className = "star";
+                var xy = getRandomPosition();
+                star.style.top = xy[0] + 'px';
+                star.style.left = xy[1] + 'px';
+                document.body.append(star);
+            }
+        }
+
+        document.getElementById("go").onclick = function () {
+            document.getElementById("start").style.display = "none";
+            addStars();
+            var audio = new Audio("https://s.cdpn.io/1202/Star_Wars_original_opening_crawl_1977.ogg");
+            audio.oncanplaythrough = function() { 
+                document.getElementById("crawl-container").style.display = "block";
+                audio.play();
+            };
+        }
+
+    </script>
+  </body>
+</html>
